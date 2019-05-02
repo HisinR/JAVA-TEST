@@ -1,6 +1,4 @@
-package cn.hisin.arithmetic.concurrent.Immutable;
-
-import com.sun.imageio.plugins.common.I18N;
+package cn.hisin.arithmetic.concurrent.immutable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,8 +10,12 @@ import java.util.Map;
  */
 public class ImmutableExample1 {
 
-    private final static Integer i =1;
-    private final static String s="s";
+    private final static Integer I =1;
+    private final static String S="s";
     private final static Map<String,Object> hashMap= new HashMap<>(0);
 
+    public static void main(String[] args) {
+//        错误
+//        I=3;
+    }
 }

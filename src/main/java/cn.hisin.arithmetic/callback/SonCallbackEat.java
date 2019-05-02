@@ -1,6 +1,9 @@
 package cn.hisin.arithmetic.callback;
 
 
+/**
+ * @author hisin
+ */
 public class SonCallbackEat implements Callback {
 
     private Mom mom;
