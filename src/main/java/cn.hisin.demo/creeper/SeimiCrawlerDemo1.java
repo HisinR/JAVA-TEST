@@ -24,7 +24,7 @@ public class SeimiCrawlerDemo1 extends BaseSeimiCrawler {
         List<Object> urls  = document.sel("//a[@class='titlelnk']/@href");
 
         urls.forEach(url ->{
-            push(Request.build(url.toString(), SeimiCrawlerDemo1::getTitle));
+            push(Request.build(url.toString(),SeimiCrawlerDemo1::getTitle));
         });
     }
 
