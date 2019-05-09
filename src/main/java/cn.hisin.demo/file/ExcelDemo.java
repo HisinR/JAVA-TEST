@@ -29,7 +29,7 @@ public class ExcelDemo {
 
     public static void main(String[] args) throws IOException {
 
-        File file = new File("F:\\IDEA项目\\JAVA-TEST\\财务需求.xlsx");
+        File file = new File("E:\\Work\\JavaTest\\JAVA-TEST\\财务需求.xlsx");
         FileInputStream fileInputStream = new FileInputStream(file);
         XSSFWorkbook xssfWorkbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet sheet = xssfWorkbook.getSheet("Sheet3");
