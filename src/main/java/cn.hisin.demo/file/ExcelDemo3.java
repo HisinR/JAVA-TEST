@@ -9,7 +9,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ExcelDemo3 {
@@ -22,19 +25,44 @@ public class ExcelDemo3 {
         XSSFSheet sheetAt = xssfWorkbook.getSheetAt(0);
 
         int lastRowNum = sheetAt.getLastRowNum();
+        NumberFormat numberFormat = new DecimalFormat("0");
+        int[] dates = new int[12];
+        //读取第一行
         for (int i = 0; i < 1; i++) {
             XSSFRow row = sheetAt.getRow(i);
             int lastCellNum = row.getLastCellNum();
-            for (int j = 1; j < lastCellNum - 1; j++) {
+            for (int j = 2; j < lastCellNum - 1; j++) {
                 XSSFCell cell = row.getCell(j);
-                System.out.println(getValue(cell));
+                System.out.println(numberFormat.format(cell.getNumericCellValue()));
+                dates[j] = Integer.parseInt(numberFormat.format(cell.getNumericCellValue()));
             }
         }
+
+        Calendar calendar = Calendar.getInstance();
+        Date[] dates1 = new Date[12];
+        for (int i = 0; i < dates.length; i++) {
+            if (dates[i] != 0) {
+                if (dates[i] == 2) {
+                    calendar.set(2017, dates[i] - 1, 28);
+                } else {
+                    calendar.set(2017, dates[i] - 1, 30);
+                }
+
+                dates1[i] = calendar.getTime();
+            }
+        }
+        for (Date date : dates1) {
+            if (date != null) {
+                System.out.println(sdf.format(date));
+            }
+        }
+
+
         return null;
     }
 
     public static void main(String[] args) throws IOException {
-        readExcel("C:\\Users\\qiqiang\\Desktop\\正蓝数据(1)\\正蓝数据\\浙江正蓝2017年收入成本分析.xlsx");
+        readExcel("F:\\IDEA项目\\JAVA-TEST\\浙江正蓝2017年收入成本分析.xlsx");
     }
 
     private static Object getValue(Cell cell) {
