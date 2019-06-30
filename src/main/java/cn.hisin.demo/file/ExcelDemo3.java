@@ -11,9 +11,7 @@ import java.io.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class ExcelDemo3 {
 
@@ -47,7 +45,6 @@ public class ExcelDemo3 {
                 } else {
                     calendar.set(2017, dates[i] - 1, 30);
                 }
-
                 dates1[i] = calendar.getTime();
             }
         }
@@ -56,7 +53,16 @@ public class ExcelDemo3 {
                 System.out.println(sdf.format(date));
             }
         }
+        //读取数据行
+        for (int i = 1; i < 7; i++) {
+            XSSFRow row = sheetAt.getRow(i);
+            int lastCellNum = row.getLastCellNum();
+            for (int j = 0; j < lastCellNum - 1; j++) {
+                XSSFCell cell = row.getCell(j);
+                Map<Object, String> dataMap = new HashMap<>(1 << 2);
 
+            }
+        }
 
         return null;
     }
