@@ -1,21 +1,19 @@
 package cn.hisin.demo.file;
 
 
+import java.util.Objects;
+
 public class ExcelVO {
 
     private String college;
 
-    private String recharge;
+    private String waterAmount;
 
-    private String managerFee;
+    private String waterFee;
 
-    private String waterFeeAndElecFee;
+    private String electricityFee;
 
-    private String maintainFee;
-
-    private String repairFee;
-
-    private String other;
+    private String hotWaterAmount;
 
     public String getCollege() {
         return college;
@@ -25,51 +23,52 @@ public class ExcelVO {
         this.college = college;
     }
 
-    public String getRecharge() {
-        return recharge;
+    public String getWaterAmount() {
+        return waterAmount;
     }
 
-    public void setRecharge(String recharge) {
-        this.recharge = recharge;
+    public void setWaterAmount(String waterAmount) {
+        this.waterAmount = waterAmount;
     }
 
-    public String getManagerFee() {
-        return managerFee;
+    public String getWaterFee() {
+        return waterFee;
     }
 
-    public void setManagerFee(String managerFee) {
-        this.managerFee = managerFee;
+    public void setWaterFee(String waterFee) {
+        this.waterFee = waterFee;
     }
 
-    public String getWaterFeeAndElecFee() {
-        return waterFeeAndElecFee;
+    public String getElectricityFee() {
+        return electricityFee;
     }
 
-    public void setWaterFeeAndElecFee(String waterFeeAndElecFee) {
-        this.waterFeeAndElecFee = waterFeeAndElecFee;
+    public void setElectricityFee(String electricityFee) {
+        this.electricityFee = electricityFee;
     }
 
-    public String getMaintainFee() {
-        return maintainFee;
+    public String getHotWaterAmount() {
+        return hotWaterAmount;
     }
 
-    public void setMaintainFee(String maintainFee) {
-        this.maintainFee = maintainFee;
+    public void setHotWaterAmount(String hotWaterAmount) {
+        this.hotWaterAmount = hotWaterAmount;
     }
 
-    public String getRepairFee() {
-        return repairFee;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExcelVO excelVO = (ExcelVO) o;
+        return college.equals(excelVO.college) &&
+                waterAmount.equals(excelVO.waterAmount) &&
+                waterFee.equals(excelVO.waterFee) &&
+                electricityFee.equals(excelVO.electricityFee) &&
+                hotWaterAmount.equals(excelVO.hotWaterAmount);
     }
 
-    public void setRepairFee(String repairFee) {
-        this.repairFee = repairFee;
-    }
-
-    public String getOther() {
-        return other;
-    }
-
-    public void setOther(String other) {
-        this.other = other;
+    @Override
+    public int hashCode() {
+        return Objects.hash(college, waterAmount, waterFee, electricityFee, hotWaterAmount);
     }
 }

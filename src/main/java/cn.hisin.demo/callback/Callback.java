@@ -1,4 +1,4 @@
-package cn.hisin.arithmetic.callback;
+package cn.hisin.demo.callback;
 
 /**
  * @author 胡海鑫
