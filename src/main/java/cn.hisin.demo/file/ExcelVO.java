@@ -1,6 +1,8 @@
 package cn.hisin.demo.file;
 
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.Objects;
 
 public class ExcelVO {
@@ -14,6 +16,8 @@ public class ExcelVO {
     private String electricityFee;
 
     private String hotWaterAmount;
+
+    private Date date;
 
     public String getCollege() {
         return college;
@@ -55,6 +59,26 @@ public class ExcelVO {
         this.hotWaterAmount = hotWaterAmount;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "ExcelVO{" +
+                "college='" + college + '\'' +
+                ", waterAmount='" + waterAmount + '\'' +
+                ", waterFee='" + waterFee + '\'' +
+                ", electricityFee='" + electricityFee + '\'' +
+                ", hotWaterAmount='" + hotWaterAmount + '\'' +
+                ", date=" + date +
+                '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,11 +88,12 @@ public class ExcelVO {
                 waterAmount.equals(excelVO.waterAmount) &&
                 waterFee.equals(excelVO.waterFee) &&
                 electricityFee.equals(excelVO.electricityFee) &&
-                hotWaterAmount.equals(excelVO.hotWaterAmount);
+                hotWaterAmount.equals(excelVO.hotWaterAmount) &&
+                date.equals(excelVO.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(college, waterAmount, waterFee, electricityFee, hotWaterAmount);
+        return Objects.hash(college, waterAmount, waterFee, electricityFee, hotWaterAmount, date);
     }
 }
