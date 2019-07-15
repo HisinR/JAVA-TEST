@@ -86,20 +86,17 @@ public class ExcelDemo3 {
             j = 2;
         }
 
-        int var3 = 1;
-
-        for (int var = 1; var < lastRowNum; var++) {
-
-            for (int var1 = 0, k = 2; var1 < dates.length; var1++, k++) {
+        int var = 0;
+//        int var3 = 1;
+        while (var < lastRowNum) {
+            for (int var1 = 0, k = 2; var1 < dates.length; var1++, k++, var++) {
+//                int temp = var3;
                 ExcelVO excelVO = new ExcelVO();
                 excelVO.setElectricityFee("");
                 excelVO.setHotWaterAmount("");
                 excelVO.setWaterAmount("");
                 excelVO.setWaterFee("");
-                for (int var2 = 0; var2 < list.size(); var2++, var3++) {
-                    if (var2 == dates.length) {
-                        break;
-                    }
+                for (int var2 = 0, var3 = 1; var2 < list.size(); var2++, var3++) {
                     XSSFRow dataRow = sheetAt.getRow(var3);
                     XSSFCell cell = dataRow.getCell(0);
                     String college = Objects.requireNonNull(getValue(cell)).toString();
@@ -107,22 +104,38 @@ public class ExcelDemo3 {
                     excelVO.setDate(dates[var1]);
                     XSSFCell xssfCellK = dataRow.getCell(1);
                     if (list.contains(excelVO)) {
-                        ExcelVO excelVO1 = list.get(var1);
+                        ExcelVO excelVO1 = list.get(list.indexOf(excelVO));
                         String value = Objects.requireNonNull(getValue(xssfCellK)).toString();
                         XSSFCell dataCell = dataRow.getCell(k);
                         setExcelVO(excelVO1, value, dataCell);
                         setExcelVO(excelVO, value, dataCell);
+                    } else {
+                        Optional<ExcelVO> first = list.stream().filter(excelVO1 ->
+                                excelVO1.getCollege().equals(excelVO.getCollege()) && excelVO.getDate().equals(excelVO1.getDate())
+                        ).findFirst();
+                        ExcelVO excelVO2 = first.get();
+                        excelVO.setElectricityFee(excelVO2.getElectricityFee());
+                        excelVO.setHotWaterAmount(excelVO2.getHotWaterAmount());
+                        excelVO.setWaterAmount(excelVO2.getWaterAmount());
+                        excelVO.setWaterFee(excelVO2.getWaterFee());
+                        if (list.contains(excelVO)) {
+                            ExcelVO excelVO1 = list.get(list.indexOf(excelVO));
+                            String value = Objects.requireNonNull(getValue(xssfCellK)).toString();
+                            XSSFCell dataCell = dataRow.getCell(k);
+                            setExcelVO(excelVO1, value, dataCell);
+                            setExcelVO(excelVO, value, dataCell);
+                        }
                     }
 
-
                 }
-
+//                var3 = temp;
             }
+//            var3 = var;
 
         }
 
         System.out.println(list.size());
-        return null;
+        return list;
     }
 
     private static void setExcelVO(ExcelVO excelVO, String value, XSSFCell dataCell) throws IllegalAccessException {
@@ -146,7 +159,10 @@ public class ExcelDemo3 {
 
     public static void main(String[] args) throws IOException, IllegalAccessException {
         long time = System.currentTimeMillis();
-        readExcel("E:\\Work\\JavaTest\\JAVA-TEST\\2019年水电及收入数据.xlsx");
+        List<ExcelVO> list = readExcel("F:\\IDEA项目\\JAVA-TEST\\2019年水电及收入数据.xlsx");
+        for (ExcelVO excelVO : list) {
+            System.out.println(excelVO);
+        }
         System.out.printf("执行耗时：%s/s", (System.currentTimeMillis() - time) / 1000);
     }
 
