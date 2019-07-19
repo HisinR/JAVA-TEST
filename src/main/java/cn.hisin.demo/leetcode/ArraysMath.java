@@ -69,7 +69,7 @@ public class ArraysMath {
 
         //输出可不写，仅为自己查看结果
         for (int x : nums) {
-            System.out.println(x);
+            System.out.print(x + "\t");
         }
     }
 

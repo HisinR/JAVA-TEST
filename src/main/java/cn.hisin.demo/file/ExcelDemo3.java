@@ -197,17 +197,11 @@ public class ExcelDemo3 {
 
     public static void main(String[] args) throws IOException, IllegalAccessException {
         long time = System.currentTimeMillis();
-//        List<ExcelVO> list = readExcel("E:\\Work\\JavaTest\\JAVA-TEST\\2019年水电及收入数据.xlsx");
-//        for (ExcelVO excelVO : list) {
-//            System.out.println(excelVO);
-//        }
-//        readExcel2("E:\\Work\\JavaTest\\JAVA-TEST\\2019水电比.xlsx");
-
-        BigDecimal bigDecimal = new BigDecimal("-1");
-        int i = bigDecimal.compareTo(BigDecimal.ZERO);
-        if (i==0){
-            System.out.println("相等");
+        List<ExcelVO> list = readExcel("E:\\Work\\JavaTest\\JAVA-TEST\\2019年水电及收入数据.xlsx");
+        for (ExcelVO excelVO : list) {
+            System.out.println(excelVO);
         }
+        readExcel2("E:\\Work\\JavaTest\\JAVA-TEST\\2019水电比.xlsx");
 
         System.out.printf("执行耗时：%s/s", (System.currentTimeMillis() - time) / 1000);
     }
