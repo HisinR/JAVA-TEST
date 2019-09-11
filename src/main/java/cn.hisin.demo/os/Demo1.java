@@ -19,7 +19,7 @@ import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.Swap;
 import org.hyperic.sigar.Who;
 
-public class Demo1 {
+public class Demo1<psvm> {
     public static void main(String[] args) {
         try {
             // System信息，从jvm获取
@@ -306,4 +306,6 @@ public class Demo1 {
             System.out.println(cfg.getName() + "网卡类型" + cfg.getType());
         }
     }
+
+
 }

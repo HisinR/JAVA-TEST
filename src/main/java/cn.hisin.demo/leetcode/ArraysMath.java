@@ -1,4 +1,4 @@
-package cn.hisin.arithmetic.leetcode;
+package cn.hisin.demo.leetcode;
 
 import java.util.*;
 
@@ -74,10 +74,27 @@ public class ArraysMath {
     }
 
     public static void main(String[] args) {
+//        int arr[] = {1, 2, 3, 4, 5};
+//        rotate(arr, 2);
+//        System.out.println();
+        fun();
+    }
 
-
-        int arr[] = {1, 2, 3, 4, 5};
-        rotate(arr, 2);
-        System.out.println();
+    public static void fun() {
+        boolean isPrime;
+        for (int i = 1; i <= 100; i++) {
+            isPrime = true;
+            for (int j = 2; j < i; j++) {
+                //若能除尽，则不为质数
+                if ((i % j) == 0) {
+                    isPrime = false;
+                    break;
+                }
+            }
+            //如果是质数，则打印
+            if (isPrime) {
+                System.out.println(i);
+            }
+        }
     }
 }
