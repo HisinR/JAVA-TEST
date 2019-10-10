@@ -1,6 +1,8 @@
 package cn.hisin.demo.security;
 
 
+import org.apache.commons.codec.binary.Hex;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -40,16 +42,16 @@ public class SHAUtil {
      * @return
      */
     private static String toHexString(byte[] hex) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (byte b : hex) {
-            //byte转int时会进行补位，需要将高位变0
-            int k = (int) b & 0xff;
-            if (k == 1) {
-                stringBuilder.append(0);
-            }
-            stringBuilder.append(Integer.toHexString(k));
-        }
-        return stringBuilder.toString();
+//        StringBuilder stringBuilder = new StringBuilder();
+//        for (byte b : hex) {
+//            //byte转int时会进行补位，需要将高位变0
+//            int k = (int) b & 0xff;
+//            if (k == 1) {
+//                stringBuilder.append(0);
+//            }
+//            stringBuilder.append(Integer.toHexString(k));
+//        }
+        return String.valueOf(Hex.encodeHex(hex,false));
     }
 
     public static void main(String[] args) throws NoSuchAlgorithmException {
