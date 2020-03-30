@@ -7,7 +7,7 @@ import java.util.concurrent.locks.Lock;
  * @author hisin
  * @date 2020/3/10 17:30
  */
-public class C {
+public class C implements Runnable {
 
 
     private final Test test;
@@ -20,15 +20,19 @@ public class C {
         this.condition = condition;
     }
 
+    @Override
     public void run() {
         lock.lock();
         try {
-            if (test.getVar().equals("C")) {
-                System.out.println("C");
-                test.setVar("A");
-                condition.signalAll();
+            for (int i = 0; i < 10; i++) {
+                if (test.getVar().equals("C")) {
+                    System.out.println("C");
+                    test.setVar("A");
+                    condition.signalAll();
+                    lock.unlock();
+                }
+                condition.await();
             }
-            condition.await();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

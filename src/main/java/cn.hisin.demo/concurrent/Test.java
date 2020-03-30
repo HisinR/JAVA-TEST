@@ -2,6 +2,8 @@ package cn.hisin.demo.concurrent;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -26,33 +28,25 @@ public class Test {
         A a = new A(test, lock, condition);
         B b = new B(test, lock, condition);
         C c = new C(test, lock, condition);
-//        new Thread(()->{
-//            for (int i = 0; i < 10; i++) {
-//                a.run();
-//            }
-//        }).start();
-//        new Thread(()->{
-//            for (int i = 0; i < 10; i++) {
-//                b.run();
-//            }
-//        }).start();
-//       new Thread(()->{
-//           for (int i = 0; i < 10; i++) {
-//               c.run();
-//           }
-//       }).start();
-
-
         ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
                 .setNameFormat("print-msg-d")
                 .build();
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1,
                 5, 1000L, TimeUnit.SECONDS, new SynchronousQueue<>(true), namedThreadFactory);
-
         try {
-          
+            List<Runnable> runnableList = new LinkedList<>();
+            runnableList.add(a);
+            runnableList.add(b);
+            runnableList.add(c);
+            threadPoolExecutor.setKeepAliveTime(5,TimeUnit.SECONDS);
+
+            for (Runnable runnable : runnableList) {
+                threadPoolExecutor.execute(runnable);
+            }
+            int activeCount = threadPoolExecutor.getActiveCount();
+            System.out.println(activeCount);
         } finally {
-            threadPoolExecutor.shutdown();
+           threadPoolExecutor.shutdown();
         }
     }
 
