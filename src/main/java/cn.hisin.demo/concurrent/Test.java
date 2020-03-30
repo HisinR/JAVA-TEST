@@ -1,13 +1,14 @@
 package cn.hisin.demo.concurrent;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import org.apache.poi.ss.formula.functions.T;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author hisin
@@ -20,27 +21,37 @@ public class Test {
     public static void main(String[] args) {
         Test test = new Test();
         test.setVar("A");
-//        Thread A = new Thread(new A(test));
-//        Thread B = new Thread(new B(test));
-//        Thread C = new Thread(new C(test));
-//        A.start();
-//        B.start();
-//        C.start();
+        Lock lock = new ReentrantLock();
+        Condition condition = lock.newCondition();
+        A a = new A(test, lock, condition);
+        B b = new B(test, lock, condition);
+        C c = new C(test, lock, condition);
+//        new Thread(()->{
+//            for (int i = 0; i < 10; i++) {
+//                a.run();
+//            }
+//        }).start();
+//        new Thread(()->{
+//            for (int i = 0; i < 10; i++) {
+//                b.run();
+//            }
+//        }).start();
+//       new Thread(()->{
+//           for (int i = 0; i < 10; i++) {
+//               c.run();
+//           }
+//       }).start();
+
+
         ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
                 .setNameFormat("print-msg-d")
                 .build();
-        List<Runnable> blockingQueue = new LinkedList<>();
-        blockingQueue.add(new A(test));
-        blockingQueue.add(new B(test));
-        blockingQueue.add(new C(test));
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1,
                 5, 1000L, TimeUnit.SECONDS, new SynchronousQueue<>(true), namedThreadFactory);
 
         try {
-            for (Runnable runnable : blockingQueue) {
-                threadPoolExecutor.execute(runnable);
-            }
-        }finally {
+          
+        } finally {
             threadPoolExecutor.shutdown();
         }
     }

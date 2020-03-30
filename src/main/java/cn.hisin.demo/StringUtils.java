@@ -7,7 +7,12 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class StringUtils {
+
+    private static final Pattern CHINESE = Pattern.compile("[\u4e00-\u9fa5]");
 
     /**
      * 将字符串中的中文转化为拼音,其他字符不变
@@ -15,9 +20,9 @@ public class StringUtils {
      * @param inputString
      * @return
      */
-    public static String getPingYin(String inputString) {
+    public static String getPingYin(String inputString, HanyuPinyinCaseType hanyuPinyinCaseType) {
         HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
-        format.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+        format.setCaseType(hanyuPinyinCaseType);
         format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
         format.setVCharType(HanyuPinyinVCharType.WITH_V);
         char[] input = inputString.trim().toCharArray();
@@ -28,7 +33,7 @@ public class StringUtils {
                     String[] temp = PinyinHelper.toHanyuPinyinStringArray(c, format);
                     output.append(temp[0]);
                 } else {
-                    output.append(Character.toString(c));
+                    output.append(c);
                 }
             }
         } catch (BadHanyuPinyinOutputFormatCombination e) {
@@ -43,11 +48,11 @@ public class StringUtils {
      * @param chinese 汉字串
      * @return 汉语拼音首字母
      */
-    public static String getFirstSpell(String chinese) {
+    public static String getFirstSpell(String chinese, HanyuPinyinCaseType hanyuPinyinCaseType) {
         StringBuilder pybf = new StringBuilder();
         char[] arr = chinese.toCharArray();
         HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
-        defaultFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+        defaultFormat.setCaseType(HanyuPinyinCaseType.UPPERCASE);
         defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
         for (char c : arr) {
             if (c > 128) {
@@ -64,6 +69,23 @@ public class StringUtils {
             }
         }
         return pybf.toString().replaceAll("\\W", "").trim();
+    }
+
+    public static boolean isChinese(String input) {
+        char[] chars = input.toCharArray();
+        for (char aChar : chars) {
+            Matcher matcher = CHINESE.matcher(Character.toString(aChar));
+            if (matcher.matches()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getFirstSpell("你好啊\thello", HanyuPinyinCaseType.UPPERCASE));
+        System.out.println(getPingYin("你好啊", HanyuPinyinCaseType.UPPERCASE));
+        System.out.println(isChinese("你好啊"));
     }
 }
 
