@@ -17,8 +17,8 @@ public class StringUtils {
     /**
      * 将字符串中的中文转化为拼音,其他字符不变
      *
-     * @param inputString
-     * @return
+     * @param inputString 输入字符串
+     * @return 拼音
      */
     public static String getPingYin(String inputString, HanyuPinyinCaseType hanyuPinyinCaseType) {
         HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
